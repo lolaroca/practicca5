@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://controlpublicidad.com/uploads/2017/05/hola-074614.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Hola!</title>
+</head>
+<body style="background-color: #f7ede7be;">
+    <div class="container">
+        <main>
+          <div class="py-5 text-center">
+            <h2 style="color:rgb(255, 0, 0)">SUSCRÍBETE AL HOLA</h2>
+            <p class="lead">Para acceder a los contenidos de ¡HOLA!+ y participar en concursos 
+                tienes que estar registrado en ¡HOLA! Estos son los únicos datos que te pediremos:</p>
+          </div>
+         
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3">Crea tu cuenta</h4>
+                <form class="needs-validation" action="">
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="name"  placeholder="Nombre"  required>
+                        </br>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="surname" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="surname"  placeholder="Apellido" required>
+                        </br>
+                    </div>
+                    <div class="col-12">
+                        <label for="email" class="form-label">Email </label>
+                        <input type="text" class="form-control" id="email"  placeholder="hola@hotmail.com"  required>
+                        </br>
+                        </br>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="contraseña1"  placeholder="Contraseña"  required>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="contraseña2"  placeholder="Repite Contraseña" required>
+                        </br>
+                        </br>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="año"  placeholder="Año de nacimiento"  required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="genero" class="form-label">Género</label>
+                        <select class="form-select" id="genero" required>
+                        <option value="">Choose...</option>
+                        <option>Masculino</option>
+                        <option>Femenino</option>
+                        <option>Otro</option>
+                        </select>
+                    </div>
+
+                </div>
+                </form>
+                
+                <div class="py-5 text-justify">
+                    <p><span style="color:rgb(255, 0, 0)"><b>Información Básica de Protección de Datos:</b></span> 
+                        Tratamos los datos del registro para mostrarte información y enviarte comunicaciones personalizadas sobre 
+                        promociones exclusivas, productos y servicios de ¡HOLA!; analizar tus preferencias para personalizar la 
+                        información, la publicidad y las ofertas; y enviar los datos a empresas colaboradoras para ofrecerte promociones 
+                        exclusivas y comunicaciones sobre sus productos y servicios. Tienes derecho a acceder, rectificar y suprimir 
+                        los datos, de oposición al tratamiento y otros derechos. El Responsable es HOLA, S.L.
+                        <span style="color:rgb(255, 0, 0)"><b ><a href="https://www.hola.com/politica-de-privacidad/">
+                            Consulta nuestra Politica de Protección de datos</a></b></span> </p>
+                  </div>
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="comunicaciones">
+                    <label class="form-check-label" for="comunicaciones">Consiento que ¡HOLA! realice comunicaciones comerciales personalizadas sobre promociones exclusivas y me ofrezca sus productos y servicios por medios telemáticos. </label>
+                    </br>
+                    </br>
+                </div>
+        
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="proteccion">
+                    <label class="form-check-label" for="proteccion">Consiento que ¡HOLA! comparta mis datos</label>
+                    </br>
+                    </br>
+                </div>
+                  
+                  <button onclick="getContactData()"  style="background-color:rgb(255, 0, 0)" class="w-100 btn btn-primary btn-lg" type="submit">Continuar</button>
+                  </br>
+                  </br>
+        
+    </main>
+</div>
+
+
+
+</body> 
+    <script>
+        const getContactData = async () =>{
+            let name = document.getElementById("name").value;
+            let surname = document.getElementById("surname").value;
+            let email = document.getElementById("email").value;
+            let contraseña1 = document.getElementById("contraseña1").value;
+            let contraseña2 = document.getElementById("contraseña2").value;
+            let año = document.getElementById("año").value;
+            let genero = document.getElementById("genero").value;
+            let checkbox = document.getElementById("proteccion").checked;
+
+
+            let request = await fetch("/contacts", {
+                method: "POST",
+                credentials: "same-origin",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body:JSON.stringify({
+                    name: name, 
+                    surname: surname,
+                    email: email,
+                    contraseña1: contraseña1,
+                    contraseña2: contraseña2,
+                    año: año,
+                    genero: genero,
+                }),
+                dataType: "json",
+
+            });
+           
+            if(request.ok){
+                while(contraseña1 != contraseña2) 
+                {
+                    alert("Las contraseñas no coinciden"); 
+                    var numeros="0123456789";
+                    var símbo
+                    for(i=0; i<contraseña1.length; i++){
+                        if (numeros.indexOf(contraseña1.charAt(i),0)!=-1){
+                            return 1;
+                        }
+                        else{
+                            alert("La contraseña tiene que contener algún número")
+
+                        }
+                    }
+                    console.log(await request.json())
+                }
+                if( $('#proteccion').is(':checked') ) {
+                    alert('proteccion de datos está seleccionado');
+                }
+            }
+
+
+
+        };
+
+
+    </script>
+</html>
